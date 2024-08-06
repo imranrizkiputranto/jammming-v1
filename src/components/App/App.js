@@ -39,6 +39,11 @@ const App = () => {
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [playlistName, setPlaylistName] = useState("New Playlist");
 
+  // Implementing Playlist Renaming
+  const updatePlaylistName = useCallback(name => { // Re Render function object on first mount
+    setPlaylistName(name); // Set playlistname to name argument
+  }, []);
+
   // Implementing add Track functionality
   const addTrack = useCallback( // Hook to only re-render function object when playlistTrack changes
     track => {
@@ -79,6 +84,7 @@ const App = () => {
             playlistTracks={playlistTracks} // Pass in prop that takes in the tracks added to the playlist
             playlistName={playlistName} // pass in prop that takes in the playlist name
             onRemove={removeTrack} // pass in prop that takes in the removeTrack function. Can call when we want
+            onNameChange={updatePlaylistName} // Pass prop that takes in updatePlaylistName function
           />
         </div>
       </div>
