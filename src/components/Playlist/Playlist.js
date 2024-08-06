@@ -10,7 +10,7 @@ const Playlist = props => {
                 defaultValue={"New Playlist"}
             />
             <Tracklist
-                tracks={props.playlistTracks}
+                tracks={props.playlistTracks} // Passes playlistTracks array to the tracks prop in the Tracklist component
             /> 
             <button className='playlist-save'> {/* Save to Spotify button */}
                 Save To Spotify

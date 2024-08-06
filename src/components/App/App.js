@@ -8,9 +8,8 @@ import Playlist from '../Playlist/Playlist';
 
 const App = () => {
 
-  const [playlistTracks, setPlaylistTracks] = useState([]);
-
-  const searchResults = [
+  let [searchResults, setSearchResults] = useState([]);
+  searchResults = [
     {
         name: 'Dawn FM',
         artist: 'The Weeknd',
@@ -36,6 +35,10 @@ const App = () => {
         id: 4
     },
   ];
+
+  const [playlistTracks, setPlaylistTracks] = useState([]);
+  const [playlistName, setPlaylistName] = useState("New Playlist");
+
   
   return (
     <div>
@@ -43,14 +46,15 @@ const App = () => {
         <h1>Ja<span className='highlight'>mmm</span>ing</h1>
       </header>
       <div className='body'>
-        <SearchBar/>
+        <SearchBar/> {/* Renders the search bar component */}
 
         <div className='playlist-container'>
           <SearchResults /* Render SearchResults component */
-            searchResults={searchResults} /* Pass in prop that takes in searchResults array */
+            searchResults={searchResults} //Pass in prop that takes in searchResults array
           />
           <Playlist 
-            playlistTracks={playlistTracks}
+            playlistTracks={playlistTracks} // Pass in prop that takes in the tracks added to the playlist
+            playlistName={playlistName} // pass in prop that takes in the playlist name
           />
         </div>
       </div>
