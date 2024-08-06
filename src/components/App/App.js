@@ -51,6 +51,15 @@ const App = () => {
     [playlistTracks]
   );
 
+  // Implementing remove track functionality
+  const removeTrack = useCallback(
+    track => { // Re render function on first component mount
+      setPlaylistTracks(prevTracks => { // Set playlistTrack array to filter out the track selected
+        return prevTracks.filter(currentTrack => currentTrack.id !== track.id) // Create a new array where the selected track is filtered out from the old array
+      });
+    },
+    []);
+
   
   return (
     <div>
@@ -65,10 +74,11 @@ const App = () => {
             searchResults={searchResults} //Pass in prop that takes in searchResults array
             onAdd={addTrack} // Pass addTrack function to the SearchResults component
           />
-          
+
           <Playlist 
             playlistTracks={playlistTracks} // Pass in prop that takes in the tracks added to the playlist
             playlistName={playlistName} // pass in prop that takes in the playlist name
+            onRemove={removeTrack} // pass in prop that takes in the removeTrack function. Can call when we want
           />
         </div>
       </div>

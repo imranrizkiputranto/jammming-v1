@@ -13,6 +13,8 @@ const Tracklist = (props) => {
                         track={track} // Passes track information into track prop
                         key={track.id} // Passes track key into key prop
                         onAdd={props.onAdd} // Passes addTrack function into track component.
+                        onRemove={props.onRemove} // Passes removeTrack function into track component.
+                        isRemoval={props.isRemoval} // Sets current isRemoval value to Track component. (Depends if it is in Playlist or SearchResult)
                     />
                 )
             })}

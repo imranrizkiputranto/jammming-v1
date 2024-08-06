@@ -11,7 +11,10 @@ const Playlist = props => {
             />
             <Tracklist
                 tracks={props.playlistTracks} // Passes playlistTracks array to the tracks prop in the Tracklist component
+                onRemove={props.onRemove} // Pass remmoveTrack function in App.js to the Tracklist component
+                isRemoval={true} // Set isRemoval to true when track is in playlist
             /> 
+            
             <button className='playlist-save'> {/* Save to Spotify button */}
                 Save To Spotify
             </button>
