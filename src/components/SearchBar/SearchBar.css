@@ -1,0 +1,38 @@
+.searchbar {
+    display: flex;
+    flex-direction: column; /* Switches orientation of input field and button to vertical */
+    align-items: center; /* Maintains the size of the components so it does not stretch */
+    padding-top: 6.5rem; /* Creates distance from the header section*/
+    margin-bottom: 6.5rem; /* Creates distance to playlist container section*/
+}
+
+.searchbar input {
+    width: 18rem;
+    border: 1px solid 'black';
+    border-radius: .75rem;
+    padding: .8rem 0;
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.searchbar input:focus { /* Removes blue outline when focused on the input field*/
+    outline: none;
+}
+
+.searchbutton {
+    cursor: pointer;
+    width: 8rem;
+    padding: .77rem 0;
+    border-radius: 32px;
+    background-color: #212121;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: .8rem;
+    font-weight: 500;
+    transition: background-color .25s; /* Change search button colour when hovered over*/
+}
+
+.searchbutton:hover {
+    background-color: rgba(29, 185, 84, .6);
+}
