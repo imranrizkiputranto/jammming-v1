@@ -3,10 +3,11 @@ import React from 'react';
 import { useState } from 'react';
 
 import SearchBar from '../SearchBar/SearchBar';
+import SearchResults from '../SearchResults/SearchResults';
 
 const App = () => {
 
-  let searchResults = [
+  const searchResults = [
     {
         name: 'Dawn FM',
         artist: 'The Weeknd',
@@ -40,9 +41,11 @@ const App = () => {
       </header>
       <div className='body'>
         <SearchBar/>
-        
-        <div className='playlist-container'>
 
+        <div className='playlist-container'>
+          <SearchResults /* Render SearchResults component */
+            searchResults={searchResults} /* Pass in prop that takes in searchResults array */
+          />
         </div>
       </div>
     </div>

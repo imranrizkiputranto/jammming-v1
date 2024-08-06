@@ -1,0 +1,21 @@
+.SearchResults {
+    height: 950px; /* Height of the entire SearchResults container */
+    background-color: rgba(21, 19, 19, 0.8);
+    width: 50%;
+    overflow-y: scroll;
+    padding: .6rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 2px 2px #000000;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+.SearchResults h2 {
+    text-align: center;
+    padding-top: .4rem; /* h2 padding from the top of the container */
+    font-size: 2rem;
+    padding-bottom: .6rem;
+}
