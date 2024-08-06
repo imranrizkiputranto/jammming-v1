@@ -1,0 +1,23 @@
+.track {
+    display: flex;
+    color: white;
+    border-bottom: 1px solid rgb(256, 256, 256, 0.6);
+}
+
+.track-information {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 72px;
+}
+
+.track-information h3 {
+    margin-bottom: .3rem;
+}
+
+.track-information p {
+    font-size: .83rem;
+    font-weight: 300;
+    color: rgba(256, 256, 256, 0.8);
+    font-family: 'Lato', Courier, monospace;
+}
