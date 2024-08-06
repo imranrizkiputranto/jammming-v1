@@ -1,0 +1,44 @@
+/* Universal Styling */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  color: white;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  font-family: 'Lato', sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-size: 48px;
+}
+
+/* Header Styling */
+header {
+  background-color: #212121;
+  font-weight: bold;
+  padding: 2rem 0;
+  height: 112px;
+}
+
+.highlight {
+  color: #1DB954;
+}
+
+/* Body Styling */
+.body {
+  background-image: url('./jammming_background.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 0 8% 10% 8%;
+}
+
+.playlist-container {
+  display: flex;
+  justify-content: space-between;
+}
