@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useState } from 'react';
 
 import SearchBar from '../SearchBar/SearchBar';
@@ -39,6 +39,18 @@ const App = () => {
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [playlistName, setPlaylistName] = useState("New Playlist");
 
+  // Implementing add Track functionality
+  const addTrack = useCallback( // Hook to only re-render function object when playlistTrack changes
+    track => {
+      if (playlistTracks.some(savedTrack => savedTrack.id === track.id)) { // If track is already saved in playlistTracks
+        return;
+      }
+
+      setPlaylistTracks(prevTracks => [...prevTracks, track]) // if not, add track to playlist
+    },
+    [playlistTracks]
+  );
+
   
   return (
     <div>
@@ -51,7 +63,9 @@ const App = () => {
         <div className='playlist-container'>
           <SearchResults /* Render SearchResults component */
             searchResults={searchResults} //Pass in prop that takes in searchResults array
+            onAdd={addTrack} // Pass addTrack function to the SearchResults component
           />
+          
           <Playlist 
             playlistTracks={playlistTracks} // Pass in prop that takes in the tracks added to the playlist
             playlistName={playlistName} // pass in prop that takes in the playlist name

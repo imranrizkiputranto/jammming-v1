@@ -2,6 +2,7 @@
     display: flex;
     color: white;
     border-bottom: 1px solid rgb(256, 256, 256, 0.6);
+    justify-content: space-between;
 }
 
 .track-information {
@@ -20,4 +21,18 @@
     font-weight: 300;
     color: rgba(256, 256, 256, 0.8);
     font-family: 'Lato', Courier, monospace;
+}
+
+.track-action {
+    cursor: pointer;
+    padding: .5rem;
+    font-size: 1.5rem;
+    border: 0px;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    transition: color .25s;
+}
+
+.track-action:hover {
+    color: rgba(265, 265, 265, .5)
 }

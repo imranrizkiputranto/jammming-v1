@@ -12,6 +12,7 @@ const Tracklist = (props) => {
                     <Track // Displays each track component
                         track={track} // Passes track information into track prop
                         key={track.id} // Passes track key into key prop
+                        onAdd={props.onAdd} // Passes addTrack function into track component.
                     />
                 )
             })}
