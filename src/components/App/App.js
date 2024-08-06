@@ -4,8 +4,11 @@ import { useState } from 'react';
 
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
+import Playlist from '../Playlist/Playlist';
 
 const App = () => {
+
+  const [playlistTracks, setPlaylistTracks] = useState([]);
 
   const searchResults = [
     {
@@ -45,6 +48,9 @@ const App = () => {
         <div className='playlist-container'>
           <SearchResults /* Render SearchResults component */
             searchResults={searchResults} /* Pass in prop that takes in searchResults array */
+          />
+          <Playlist 
+            playlistTracks={playlistTracks}
           />
         </div>
       </div>
