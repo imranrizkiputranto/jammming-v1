@@ -1,17 +1,35 @@
 import './App.css';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useState } from 'react';
 
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 import Spotify from '../../util/Spotify';
+import Login from '../Login/Login';
 
 const App = () => {
 
   const[searchResults, setSearchResults] = useState([]);
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [playlistName, setPlaylistName] = useState("New Playlist");
+  const [clientId, setClientId] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // useEffect to check for access token and authentication status
+  useEffect(() => {
+    const accessToken = Spotify.getAccessToken();
+    if (accessToken) {
+      setIsAuthenticated(true); // If accessToken exists, setIsAuthenticated to True
+    }
+  }, []);
+
+  const handleLogin = clientId => {
+    setClientId(clientId);
+    Spotify.setClientId(clientId); // Set client ID in Spotify.js
+    Spotify.getAccessToken(); // Initiate authorisation
+    setIsAuthenticated(true);
+  }
 
   // Implementing Search Functionality
   const search = term => {
@@ -67,26 +85,30 @@ const App = () => {
       <header>
         <h1>Ja<span className='highlight'>mmm</span>ing</h1>
       </header>
-      <div className='body'>
-        <SearchBar
-          onSearch={search} // Passes search function to onSearch prop
-        /> {/* Renders the search bar component */}
+      {isAuthenticated ? (
+        <div className='body'>
+          <SearchBar
+            onSearch={search} // Passes search function to onSearch prop
+          /> {/* Renders the search bar component */}
 
-        <div className='playlist-container'>
-          <SearchResults /* Render SearchResults component */
-            searchResults={searchResults} //Pass in prop that takes in searchResults array
-            onAdd={addTrack} // Pass addTrack function to the SearchResults component
-          />
+          <div className='playlist-container'>
+            <SearchResults /* Render SearchResults component */
+              searchResults={searchResults} //Pass in prop that takes in searchResults array
+              onAdd={addTrack} // Pass addTrack function to the SearchResults component
+            />
 
-          <Playlist 
-            playlistTracks={playlistTracks} // Pass in prop that takes in the tracks added to the playlist
-            playlistName={playlistName} // pass in prop that takes in the playlist name
-            onRemove={removeTrack} // pass in prop that takes in the removeTrack function. Can call when we want
-            onNameChange={updatePlaylistName} // Pass prop that takes in updatePlaylistName function
-            onSave={savePlaylist} // Pass prop that takes in savePlaylist function
-          />
+            <Playlist 
+              playlistTracks={playlistTracks} // Pass in prop that takes in the tracks added to the playlist
+              playlistName={playlistName} // pass in prop that takes in the playlist name
+              onRemove={removeTrack} // pass in prop that takes in the removeTrack function. Can call when we want
+              onNameChange={updatePlaylistName} // Pass prop that takes in updatePlaylistName function
+              onSave={savePlaylist} // Pass prop that takes in savePlaylist function
+            />
+          </div>
         </div>
-      </div>
+      ) : (
+        <Login onLogin={handleLogin}/> // Display login component, pass handleLogin function to onLogin prop
+      )}
     </div>
   );
 };
