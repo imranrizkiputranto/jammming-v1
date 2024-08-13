@@ -32,12 +32,44 @@ const Spotify = { // Object containing all the necessary methods
             
             return accessToken;
         } else if (clientId) { // If only ClientId is truthy
-            // Redirect user to authorise application
+            // Redirect user to authorise application before logging in
             const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=${encodeURIComponent(scope)}&redirect_uri=${encodeURIComponent(redirectUri)}&show_dialog=true`;
             window.location.href = accessUrl;
         }
-    }
+    },
 
-    
+    // Method to search for tracks based on search term on search bar
+    async search(term) {
+        const accessToken = Spotify.getAccessToken(); // executing getAccessToken method
+        try {
+            const response = await fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, { // Use Spotify API to search for track, input term in URL
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
+            const jsonResponse = await response.json() // Convert response to json object
+            if (!jsonResponse.tracks) { // If no tracks are present, return an empty array
+                return [];
+            }
+
+            // Return an array of tracks. Each track is an object containing the relevant properties
+            return jsonResponse.tracks.items.map(track => ({
+                id: track.id,
+                name: track.name,
+                artist: track.artists.map(artist => `${artist.name} `),
+                album: track.album.name,
+                url: track.uri
+            }));
+
+        } catch (error) {
+            console.log(error);
+            alert(error);
+            return [];
+        }
+    },
+
+
 
 }
+
+export default Spotify;
