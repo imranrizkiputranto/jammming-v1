@@ -14,25 +14,29 @@ const App = () => {
         name: 'Dawn FM',
         artist: 'The Weeknd',
         album: 'Dawn FM',
-        id: 1
+        id: 1,
+        uri: 'spotify:track:6krYS8KtmNAYyb5uTZiYW4'
     },
     {
         name: 'Gasoline',
         artist: 'The Weeknd',
         album: 'Dawn FM',
-        id: 2
+        id: 2,
+        uri: 'spotify:track:3KyKxJ4P3pVCgaZwaq2rUC'
     },
     {
         name: 'How Do I Make You Love Me',
         artist: 'The Weeknd',
         album: 'Dawn FM',
-        id: 3
+        id: 3,
+        uri: 'spotify:track:2Ghp894n1laIf2w98VeAOJ'
     },
     {
         name: 'Take My Breath',
         artist: 'The Weeknd',
         album: 'Dawn FM',
-        id: 4
+        id: 4,
+        uri: 'spotify:track:2vgUijXOTRMnWXDtvgMp2b'
     },
   ];
 
@@ -65,6 +69,20 @@ const App = () => {
     },
     []);
 
+    // Implementing Save to Playlist feature
+    const savePlaylist = useCallback(() => { // Only re renders if playlistName and playlistTracks is re rendered
+      if(playlistTracks.length === 0) {
+        return; // if playlistTracks is empty, do not save to Spotify
+      }
+
+      const TrackURIs = playlistTracks.map(track => track.uri); // get uri of each track from the tracks saved to the playlist
+
+      // When playlist is saved, reset playlistName, playlistTracks and searchResults
+      setPlaylistName("New Playlist"); 
+      setPlaylistTracks([]);
+      setSearchResults([]);
+
+    }, [playlistName, playlistTracks]);
   
   return (
     <div>
@@ -85,6 +103,7 @@ const App = () => {
             playlistName={playlistName} // pass in prop that takes in the playlist name
             onRemove={removeTrack} // pass in prop that takes in the removeTrack function. Can call when we want
             onNameChange={updatePlaylistName} // Pass prop that takes in updatePlaylistName function
+            onSave={savePlaylist} // Pass prop that takes in savePlaylist function
           />
         </div>
       </div>

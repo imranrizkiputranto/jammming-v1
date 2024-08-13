@@ -21,7 +21,10 @@ const Playlist = props => {
                 isRemoval={true} // Set isRemoval to true when track is in playlist
             /> 
 
-            <button className='playlist-save'> {/* Save to Spotify button */}
+            <button 
+                className='playlist-save'
+                onClick={props.onSave} // When button is clicked, execute savePlaylist function passed into onSave prop.
+                > {/* Save to Spotify button */}
                 Save To Spotify
             </button>
         </div>
