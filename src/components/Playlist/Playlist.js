@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import './Playlist.css';
 import Tracklist from '../Tracklist/Tracklist';
 
-const Playlist = props => {
+const Playlist = (props) => {
     const handleNameChange = useCallback( // Re render when updatePlaylistName function re renders
         event => {
             props.onNameChange(event.target.value) // Call updatePlaylistName function with current input value

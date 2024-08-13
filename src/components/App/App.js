@@ -9,40 +9,16 @@ import Spotify from '../../util/Spotify';
 
 const App = () => {
 
-  let [searchResults, setSearchResults] = useState([]);
-  searchResults = [
-    {
-        name: 'Dawn FM',
-        artist: 'The Weeknd',
-        album: 'Dawn FM',
-        id: 1,
-        uri: 'spotify:track:6krYS8KtmNAYyb5uTZiYW4'
-    },
-    {
-        name: 'Gasoline',
-        artist: 'The Weeknd',
-        album: 'Dawn FM',
-        id: 2,
-        uri: 'spotify:track:3KyKxJ4P3pVCgaZwaq2rUC'
-    },
-    {
-        name: 'How Do I Make You Love Me',
-        artist: 'The Weeknd',
-        album: 'Dawn FM',
-        id: 3,
-        uri: 'spotify:track:2Ghp894n1laIf2w98VeAOJ'
-    },
-    {
-        name: 'Take My Breath',
-        artist: 'The Weeknd',
-        album: 'Dawn FM',
-        id: 4,
-        uri: 'spotify:track:2vgUijXOTRMnWXDtvgMp2b'
-    },
-  ];
-
+  const[searchResults, setSearchResults] = useState([]);
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [playlistName, setPlaylistName] = useState("New Playlist");
+
+  // Implementing Search Functionality
+  const search = term => {
+    Spotify.search(term).then(searchResults => {
+      setSearchResults(searchResults);
+    });
+  }; 
 
   // Implementing Playlist Renaming
   const updatePlaylistName = useCallback(name => { // Re Render function object on first mount
@@ -76,13 +52,14 @@ const App = () => {
         return; // if playlistTracks is empty, do not save to Spotify
       }
 
-      const TrackURIs = playlistTracks.map(track => track.uri); // get uri of each track from the tracks saved to the playlist
+      const trackURIs = playlistTracks.map(track => track.uri); // get uri of each track from the tracks saved to the playlist
 
       // When playlist is saved, reset playlistName, playlistTracks and searchResults
-      setPlaylistName("New Playlist"); 
-      setPlaylistTracks([]);
-      setSearchResults([]);
-
+      Spotify.savePlaylist(playlistName, trackURIs).then(() => {
+        setPlaylistName("New Playlist"); 
+        setPlaylistTracks([]);
+        setSearchResults([]);
+      });
     }, [playlistName, playlistTracks]);
   
   return (
@@ -91,7 +68,9 @@ const App = () => {
         <h1>Ja<span className='highlight'>mmm</span>ing</h1>
       </header>
       <div className='body'>
-        <SearchBar/> {/* Renders the search bar component */}
+        <SearchBar
+          onSearch={search} // Passes search function to onSearch prop
+        /> {/* Renders the search bar component */}
 
         <div className='playlist-container'>
           <SearchResults /* Render SearchResults component */

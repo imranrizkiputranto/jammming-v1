@@ -20,21 +20,21 @@ const Track = (props) => {
         if (props.isRemoval) { // if isRemoval is true, render the - button
             return (
                 <button
-                className='track-action'
-                onClick={removeTrack}> {/* When the - button is clicked, call the removeTrack function above */}
+                    className='track-action'
+                    onClick={removeTrack}> {/* When the - button is clicked, call the removeTrack function above */}
                     -
                 </button>
-            )
-        }
+            );
+        };
 
         return (
             <button 
-            className='track-action'
-            onClick={addTrack}> {/* When the + button is clicked, call the addTrack function above */}
+                className='track-action'
+                onClick={addTrack}> {/* When the + button is clicked, call the addTrack function above */}
                 +
             </button>
-        )
-    }
+        );
+    };
 
     return ( // Returns what the component should display
         <div className='track'> {/* Flex container for each track component rendered */}

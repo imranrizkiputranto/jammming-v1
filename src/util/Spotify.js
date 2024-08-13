@@ -1,8 +1,8 @@
 // To use the Spotify API with Jammming, you need to get a user’s Spotify access token to make Spotify API requests.
 // Create a JavaScript module that will handle the logic for getting an access token and using it to make requests. The method should have a way to get a user’s access token and store it.
 
-// const clientId = '873792c981c34d8091cdc0a5fe2fed6d';
-let clientId;
+const clientId = '873792c981c34d8091cdc0a5fe2fed6d';
+//let clientId;
 const redirectUri = 'http://localhost:3000/';
 const scope = 'playlist-modify-public'
 let accessToken;
@@ -58,7 +58,7 @@ const Spotify = { // Object containing all the necessary methods
                 name: track.name,
                 artist: track.artists.map(artist => `${artist.name} `),
                 album: track.album.name,
-                url: track.uri
+                uri: track.uri
             }));
 
         } catch (error) {
@@ -68,8 +68,62 @@ const Spotify = { // Object containing all the necessary methods
         }
     },
 
+    // Method to save playlist to user account
+    async savePlaylist (playlistName, trackURIs) {
+        if (!playlistName || !trackURIs.length) {// If playlistName is empty or no tracks are present
+            console.log('Playlist Name or Tracks is missing.')
+            alert('Playlist Name or Tracks is missing.')
+            return; // Return nothing
+        };
 
+        const accessToken = Spotify.getAccessToken(); // Executing getAccessToken function
+        if (!accessToken) {
+            console.log('Access token is missing.');
+            alert('Access token is missing.');
+            return;
+        };
+        
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        };
 
+        try {
+            const userResponse = await fetch('https://api.spotify.com/v1/me', {headers}); // Request user spotify username
+            const userData = await userResponse.json();
+            const userId = userData.id;
+
+            const createPlaylistResponse = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, { // Create new playlist for user
+                method: 'POST', 
+                headers: headers,
+                body: JSON.stringify({ name: playlistName, description: 'My New Playlist' })
+            })
+
+            const playlistData = await createPlaylistResponse.json();
+            const playlistId = playlistData.id;
+
+            const addTracksResponse = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, { // Add tracks to playlist
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({ uris: trackURIs })
+            });
+
+            console.log("Track URIs:", trackURIs);
+            
+            if (!addTracksResponse.ok) {
+                const errorData = await addTracksResponse.json();
+                console.error('Failed to add tracks:', errorData);
+                alert(`Failed to save tracks. Error: ${errorData.error.message}`)
+                return;
+            }
+
+            console.log('Playlist saved to spotify');
+            alert('Playlist saved to spotify');    
+
+        } catch (error) {
+            console.error(`Error saving playlist`, error);
+        };
+    }
 }
 
 export default Spotify;
