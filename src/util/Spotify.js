@@ -1,8 +1,8 @@
 // To use the Spotify API with Jammming, you need to get a user’s Spotify access token to make Spotify API requests.
 // Create a JavaScript module that will handle the logic for getting an access token and using it to make requests. The method should have a way to get a user’s access token and store it.
 
-let clientId;
-const redirectUri = 'http://www.jammming-v1.netlify.app/';
+let clientId = '873792c981c34d8091cdc0a5fe2fed6d';
+const redirectUri = 'http://localhost:3000/';
 const scope = 'playlist-modify-public'
 let accessToken;
 
